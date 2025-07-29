@@ -84,13 +84,14 @@ export function logPerson(person: Person) {
     }
     console.log(` - ${person.name}, ${person.age}, ${additionalInformation}`);
 }
+type UserFilterCriteria = Partial<Omit<User, 'type'>>;
 
 export function filterUsers<T>(
     persons: Person[],
-    criteria: Partial<User>
+    criteria: UserFilterCriteria
      ): User[] {
     return persons.filter(isUser).filter((user) => {
-        const criteriaKeys = Object.keys(criteria) as (keyof User)[];
+        const criteriaKeys = Object.keys(criteria) as (keyof UserFilterCriteria)[];
         return criteriaKeys.every((fieldName) => {
             return user[fieldName] === criteria[fieldName];
         });
